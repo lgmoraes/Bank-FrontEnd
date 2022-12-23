@@ -6,7 +6,7 @@ function Header() {
   return (
     <header className="header">
       <nav className="header__nav">
-        <Link className="header__nav-logo" href="./index.html">
+        <Link className="header__nav-logo" to="/">
           <img
             className="header__nav-image"
             src={logo}
@@ -15,7 +15,7 @@ function Header() {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-          <Link className="header__nav-item" href="./signIn.html">
+          <Link className="header__nav-item" to="/sign-in">
             <i className="fa fa-user-circle"></i> Sign In
           </Link>
         </div>
