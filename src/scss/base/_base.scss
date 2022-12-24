@@ -2,6 +2,15 @@
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+/*** RESET CSS ***/
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*** BASE ***/
+
 html {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,6 +36,8 @@ body {
 .bg-dark {
   background-color: #12002b;
 }
+
+/*** SCREEN READER ***/
 
 .sr-only {
   border: 0 !important;

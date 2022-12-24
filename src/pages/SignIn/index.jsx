@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 function SignIn() {
   useEffect(() => {
@@ -12,18 +13,22 @@ function SignIn() {
         <h1>Sign In</h1>
         <form>
           <div className="signIn__inputWrapper">
-            <label for="username">Username</label>
+            <label htmlFor="username">Username</label>
             <input type="text" id="username" />
           </div>
           <div className="signIn__inputWrapper">
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input type="password" id="password" />
           </div>
           <div className="signIn__inputRemember">
             <input type="checkbox" id="remember-me" />
-            <label for="remember-me">Remember me</label>
+            <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button className="signIn__button">Sign In</button>
+          <Link to="/UserAccount">
+            <button type="button" className="signIn__button">
+              Sign In
+            </button>
+          </Link>
         </form>
       </section>
     </main>
