@@ -1,10 +1,44 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useStore } from 'react-redux'
+import { login } from '../../features/user'
+import { selectUser } from '../../utils/selectors'
 
 function SignIn() {
+  const store = useStore()
+  const navigate = useNavigate()
+  const [signing, setSigning] = useState(false)
+  const user = useSelector(selectUser)
+
+  function send() {
+    login(store, {
+      email: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+    })
+  }
+
   useEffect(() => {
     document.title = 'Argent Bank - Se connecter'
   }, [])
+
+  useEffect(() => {
+    if (user.status === 'void') return
+
+    if (user.status === 'pending' || user.status === 'updating') {
+      setSigning(true)
+      return
+    }
+
+    if (signing === false) return
+
+    if (user.status === 'rejected') {
+      setSigning(false)
+      console.warn(user.error)
+      return
+    }
+
+    if (user.status === 'resolved') navigate('/userAccount')
+  }, [user, signing, navigate])
 
   return (
     <main className="signIn main bg-dark">
@@ -24,11 +58,9 @@ function SignIn() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <Link to="/UserAccount">
-            <button type="button" className="signIn__button">
-              Sign In
-            </button>
-          </Link>
+          <button type="button" className="signIn__button" onClick={send}>
+            Sign In
+          </button>
         </form>
       </section>
     </main>
