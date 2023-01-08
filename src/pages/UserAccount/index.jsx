@@ -12,12 +12,19 @@ function UserAccount() {
   const token = useSelector(selectUserToken)
 
   const { data } = useQuery('profile', async () => {
-    const response = await fetch(BASE_URL + '/profile')
+    const response = await fetch(BASE_URL + '/user/profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      cache: 'default',
+    })
     const data = await response.json()
     return data
   })
 
-  const { firstName, lastName } = data ?? {}
+  const { firstName, lastName } = data?.body ?? {}
 
   useEffect(() => {
     if (!userConnected) navigate('/')

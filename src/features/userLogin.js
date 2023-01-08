@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/contantes'
 
 const initialState = {
   status: 'void',
-  data: null,
+  token: null,
   error: null,
 }
 
@@ -70,7 +70,7 @@ const userLoginSlice = createSlice({
     },
     resolved: (draft, action) => {
       if (draft.status === 'pending' || draft.status === 'updating') {
-        draft.data = action.payload.body
+        draft.token = action.payload.body.token
         draft.status = 'resolved'
         return
       }
@@ -81,7 +81,7 @@ const userLoginSlice = createSlice({
       if (draft.status === 'pending' || draft.status === 'updating') {
         draft.status = 'rejected'
         draft.error = action.payload
-        draft.data = null
+        draft.token = null
         return
       }
 
@@ -90,7 +90,7 @@ const userLoginSlice = createSlice({
     logout: (draft) => {
       if (draft.status === 'resolved') {
         draft.status = 'void'
-        draft.data = null
+        draft.token = null
         draft.error = null
         return
       }
