@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { selectUser } from '../utils/selectors'
+import { selectUserLogin } from '../utils/selectors'
 import { BASE_URL } from '../utils/contantes'
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export const login = async (store, { email, password }) => {
-  const status = selectUser(store.getState()).status
+  const status = selectUserLogin(store.getState()).status
 
   if (status === 'pending' || status === 'updating') {
     return
@@ -45,8 +45,8 @@ export const login = async (store, { email, password }) => {
   return
 }
 
-const userSlice = createSlice({
-  name: 'user',
+const userLoginSlice = createSlice({
+  name: 'userLogin',
   initialState,
   reducers: {
     fetching: (draft) => {
@@ -87,11 +87,21 @@ const userSlice = createSlice({
 
       return
     },
+    logout: (draft) => {
+      if (draft.status === 'resolved') {
+        draft.status = 'void'
+        draft.data = null
+        draft.error = null
+        return
+      }
+
+      return
+    },
   },
 })
 
-const { actions, reducer } = userSlice
+const { actions, reducer } = userLoginSlice
 
-export const { fetching, resolved, rejected } = actions
+export const { fetching, resolved, rejected, logout } = actions
 
 export default reducer

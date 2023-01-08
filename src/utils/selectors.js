@@ -1,3 +1,6 @@
-export const selectUser = (state) => state.user
+export const selectUserLogin = (state) => state.userLogin
 
-export const selectUserToken = (state) => state.user.data?.token
+export const selectUserIsConnected = (state) =>
+  state.userLogin.status === 'resolved'
+
+export const selectUserToken = (state) => state.userLogin.data?.token

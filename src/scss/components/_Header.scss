@@ -19,8 +19,11 @@
     &:hover {
       text-decoration: underline;
     }
-    text-decoration: none;
     margin-right: 0.5rem;
+
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
   }
   &__nav-logo {
     display: flex;

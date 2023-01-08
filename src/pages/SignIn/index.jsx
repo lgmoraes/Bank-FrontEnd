@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useStore } from 'react-redux'
-import { login } from '../../features/user'
-import { selectUser } from '../../utils/selectors'
+import { login } from '../../features/userLogin'
+import { selectUserLogin } from '../../utils/selectors'
 
 function SignIn() {
   const store = useStore()
   const navigate = useNavigate()
   const [signing, setSigning] = useState(false)
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUserLogin)
 
   function send() {
     login(store, {
