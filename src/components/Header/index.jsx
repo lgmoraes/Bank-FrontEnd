@@ -26,17 +26,23 @@ function Header() {
           />
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
-        <div>
-          {userConnected ? (
+
+        {userConnected ? (
+          <div className="header__nav-items">
+            <Link className="header__nav-item" to="/userAccount">
+              <i className="fa fa-user-circle"></i> Tony
+            </Link>
             <div className="header__nav-item" onClick={handleLogout}>
-              <i className="fa fa-user-circle"></i> Logout
+              <i className="fa fa-sign-out"></i> Sign out
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="header__nav-items">
             <Link className="header__nav-item" to="/sign-in">
               <i className="fa fa-user-circle"></i> Sign In
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </nav>
     </header>
   )
