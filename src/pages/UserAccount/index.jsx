@@ -1,6 +1,28 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useQuery } from 'react-query'
+import { selectUserIsConnected, selectUserToken } from '../../utils/selectors'
+import { BASE_URL } from '../../utils/contantes'
 
 function UserAccount() {
+  const navigate = useNavigate()
+
+  const userConnected = useSelector(selectUserIsConnected)
+  const token = useSelector(selectUserToken)
+
+  const { data } = useQuery('profile', async () => {
+    const response = await fetch(BASE_URL + '/profile')
+    const data = await response.json()
+    return data
+  })
+
+  const { firstName, lastName } = data ?? {}
+
+  useEffect(() => {
+    if (!userConnected) navigate('/')
+  }, [navigate, userConnected])
+
   useEffect(() => {
     document.title = 'Argent Bank - Votre compte'
   }, [])
@@ -11,7 +33,7 @@ function UserAccount() {
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {firstName} {lastName}!
         </h1>
         <button className="userAccount__edit-button">Edit Name</button>
       </div>
