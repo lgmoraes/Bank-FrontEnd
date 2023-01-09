@@ -1,39 +1,22 @@
 import { useSelector, useStore } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { selectUserIsConnected, selectUserToken } from '../../utils/selectors'
-import { BASE_URL } from '../../utils/contantes'
+import { selectUserIsConnected, selectUserData } from '../../utils/selectors'
 import { logout } from '../../features/userLogin'
 
 const logo = require('../../assets/img/argentBankLogo.png')
 
 function Header() {
   const store = useStore()
-  const token = useSelector(selectUserToken)
   const navigate = useNavigate()
   const userConnected = useSelector(selectUserIsConnected)
-
-  const { data } = useQuery('profile', async () => {
-    if (!token) return
-
-    const response = await fetch(BASE_URL + '/user/profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      cache: 'default',
-    })
-    const data = await response.json()
-    return data
-  })
+  const data = useSelector(selectUserData)
 
   function handleLogout() {
     store.dispatch(logout())
     navigate('/')
   }
 
-  const { firstName } = data?.body ?? {}
+  const { firstName } = data ?? {}
 
   return (
     <header className="header">

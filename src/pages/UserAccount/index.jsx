@@ -1,30 +1,21 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { useQuery } from 'react-query'
-import { selectUserIsConnected, selectUserToken } from '../../utils/selectors'
-import { BASE_URL } from '../../utils/contantes'
+import { useSelector, useStore } from 'react-redux'
+import {
+  selectUserIsConnected,
+  selectUserData,
+  selectUserToken,
+} from '../../utils/selectors'
+import { getUserProfile } from '../../features/userProfile'
 
 function UserAccount() {
+  const store = useStore()
   const navigate = useNavigate()
-
   const userConnected = useSelector(selectUserIsConnected)
   const token = useSelector(selectUserToken)
+  const user = useSelector(selectUserData)
 
-  const { data } = useQuery('profile', async () => {
-    const response = await fetch(BASE_URL + '/user/profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      cache: 'default',
-    })
-    const data = await response.json()
-    return data
-  })
-
-  const { firstName, lastName } = data?.body ?? {}
+  const { firstName, lastName } = user ?? {}
 
   useEffect(() => {
     if (!userConnected) navigate('/')
@@ -32,7 +23,8 @@ function UserAccount() {
 
   useEffect(() => {
     document.title = 'Argent Bank - Votre compte'
-  }, [])
+    getUserProfile(store, token)
+  }, [store, token])
 
   return (
     <main className="userAccount main bg-dark">
