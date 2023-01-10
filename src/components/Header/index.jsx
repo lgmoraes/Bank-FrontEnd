@@ -32,7 +32,7 @@ function Header() {
 
         {userConnected ? (
           <div className="header__nav-items">
-            <Link className="header__nav-item" to="/userAccount">
+            <Link className="header__nav-item" to="/profile">
               <i className="fa fa-user-circle"></i> {firstName}
             </Link>
             <div className="header__nav-item" onClick={handleLogout}>
@@ -41,7 +41,7 @@ function Header() {
           </div>
         ) : (
           <div className="header__nav-items">
-            <Link className="header__nav-item" to="/sign-in">
+            <Link className="header__nav-item" to="/login">
               <i className="fa fa-user-circle"></i> Sign In
             </Link>
           </div>

@@ -8,7 +8,7 @@ import {
 } from '../../utils/selectors'
 import { getUserProfile } from '../../features/userProfile'
 
-function UserAccount() {
+function Profile() {
   const store = useStore()
   const navigate = useNavigate()
   const userConnected = useSelector(selectUserIsConnected)
@@ -89,4 +89,4 @@ function UserAccount() {
   )
 }
 
-export default UserAccount
+export default Profile

@@ -4,7 +4,7 @@ import { useSelector, useStore } from 'react-redux'
 import { login } from '../../features/userLogin'
 import { selectUserLogin } from '../../utils/selectors'
 
-function SignIn() {
+function Login() {
   const store = useStore()
   const navigate = useNavigate()
   const [signing, setSigning] = useState(false)
@@ -37,7 +37,7 @@ function SignIn() {
       return
     }
 
-    if (user.status === 'resolved') navigate('/userAccount')
+    if (user.status === 'resolved') navigate('/profile')
   }, [user, signing, navigate])
 
   return (
@@ -67,4 +67,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Login

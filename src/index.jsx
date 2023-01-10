@@ -7,8 +7,8 @@ import './scss/main.scss'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import SignIn from './pages/SignIn'
-import UserAccount from './pages/UserAccount'
+import Login from './pages/Login'
+import Profile from './pages/Profile'
 import Error404 from './pages/Error404'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -19,8 +19,8 @@ root.render(
         <Header />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/sign-in" element={<SignIn />}></Route>
-          <Route path="/userAccount" element={<UserAccount />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="*" element={<Error404 />}></Route>
         </Routes>
         <Footer />
