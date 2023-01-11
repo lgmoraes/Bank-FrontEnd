@@ -42,6 +42,41 @@ export const getUserProfile = async (store, token) => {
   return
 }
 
+export const setUserName = async (store, token, { firstName, lastName }) => {
+  const status = selectUserProfile(store.getState()).status
+
+  if (status === 'pending' || status === 'updating') {
+    return
+  }
+
+  store.dispatch(actions.fetching())
+
+  try {
+    const response = await fetch(BASE_URL + '/user/profile', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ firstName, lastName }),
+      cache: 'default',
+    })
+
+    const data = await response.json()
+
+    if (data.status !== 200) {
+      store.dispatch(actions.rejected(data.message))
+      return
+    }
+
+    store.dispatch(actions.resolved(data))
+  } catch (error) {
+    store.dispatch(actions.rejected(error))
+  }
+
+  return
+}
+
 const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState,

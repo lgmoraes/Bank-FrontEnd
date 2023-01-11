@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useStore } from 'react-redux'
 import {
@@ -6,7 +6,7 @@ import {
   selectUserData,
   selectUserToken,
 } from '../../utils/selectors'
-import { getUserProfile } from '../../features/userProfile'
+import { getUserProfile, setUserName } from '../../features/userProfile'
 
 function Profile() {
   const store = useStore()
@@ -15,7 +15,18 @@ function Profile() {
   const token = useSelector(selectUserToken)
   const user = useSelector(selectUserData)
 
+  const [editingName, setEditingName] = useState(false)
   const { firstName, lastName } = user ?? {}
+
+  function updateUserName() {
+    const data = {
+      firstName: document.getElementById('input_firstName').value,
+      lastName: document.getElementById('input_lastName').value,
+    }
+
+    setUserName(store, token, data)
+    setEditingName(false)
+  }
 
   useEffect(() => {
     if (!userConnected) navigate('/')
@@ -29,12 +40,50 @@ function Profile() {
   return (
     <main className="userAccount main bg-dark">
       <div className="userAccount__header">
-        <h1>
-          Welcome back
-          <br />
-          {firstName} {lastName}!
-        </h1>
-        <button className="userAccount__edit-button">Edit Name</button>
+        {editingName ? (
+          <div>
+            <h1>
+              Welcome back
+              <br />
+              <input
+                id="input_firstName"
+                className="userAccount__input"
+                type="text"
+                defaultValue={firstName}
+              />
+              <input
+                id="input_lastName"
+                className="userAccount__input"
+                type="text"
+                defaultValue={lastName}
+              />
+              <br />
+              <button className="userAccount__button" onClick={updateUserName}>
+                Save
+              </button>
+              <button
+                className="userAccount__button"
+                onClick={() => setEditingName(false)}
+              >
+                Cancel
+              </button>
+            </h1>
+          </div>
+        ) : (
+          <div>
+            <h1>
+              Welcome back
+              <br />
+              {firstName} {lastName}!
+            </h1>
+            <button
+              className="userAccount__button"
+              onClick={() => setEditingName(true)}
+            >
+              Edit Name
+            </button>
+          </div>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
       <section className="userAccount__account">
